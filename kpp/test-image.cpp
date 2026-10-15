@@ -5,23 +5,23 @@ int main() {
     cv::Mat image = cv::imread("../image_n_video/photos/card.jpeg");
     cv::resize(image, image, cv::Size(640,480));
 
-    // variabel hsvImage
-    cv::Mat hsvImage;
+    // variabel hlsImage
+    cv::Mat hlsImage;
     // function convert color
-    cv::cvtColor(image, hsvImage, cv::COLOR_BGR2HSV);
+    cv::cvtColor(image, hlsImage, cv::COLOR_BGR2HLS);
     
     // variabel thresholdedImage
     cv::Mat thresholdedImage,red1,red2;
     // function thresholding
-    cv::inRange(hsvImage, cv::Scalar(0,130,150), cv::Scalar(4,255,255), red1);
-        cv::inRange(hsvImage, cv::Scalar(175,130,150), cv::Scalar(179,255,255), red2);
-        cv::bitwise_or(red1,red2,thresholdedImage); 
+    cv::inRange(hlsImage, cv::Scalar(0,90,120), cv::Scalar(10,200,255), red1);
+    cv::inRange(hlsImage, cv::Scalar(175,90,120), cv::Scalar(179,200,255), red2);
+    cv::bitwise_or(red1,red2,thresholdedImage); 
     // variabel morphologi
     cv::Mat morphology = thresholdedImage.clone();
     // function morph erode and dilate
-    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
-    cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),1);
-    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
+    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),3);
+    cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
+    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),3);
 
     // variabel vector contour
     std::vector<std::vector<cv::Point>> contours;
@@ -38,7 +38,7 @@ int main() {
     }
 
     // perbedaan
-    cv::imshow("hls", hsvImage);
+    cv::imshow("hls", hlsImage);
     cv::imshow("thresholded", thresholdedImage);
     cv::imshow("morph", morphology);
     cv::imshow("Bounding Box Result", result);
