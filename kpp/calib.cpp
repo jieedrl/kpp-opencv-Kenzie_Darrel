@@ -19,7 +19,7 @@ int main() {
     cv::Mat frame, gray;
     
     cv::Size chessboard(8, 6);
-    float chess_size = 0.023f;
+    double chess_size = 23;
 
     std::vector<cv::Point3f> objp;
     std::vector<std::vector<cv::Point3f>> obj_points;
@@ -159,10 +159,7 @@ int main() {
     std::cout << "\nDistortion D:\n" << D.t() << '\n';
     std::cout << "\nReprojection error: " << ret << '\n';
 
-    cv::FileStorage fs(
-        "../yaml/calibration.yml",
-        cv::FileStorage::WRITE
-    );
+    cv::FileStorage fs("../yaml/calibration.yml",cv::FileStorage::WRITE);
 
     if (!fs.isOpened()) {
         std::cerr << "Error: Gagal menyimpan calibration.yml\n";
@@ -170,7 +167,7 @@ int main() {
     }
 
     fs << "K" << K;
-    fs << "D" << D;
+    // fs << "D" << D;
 
     fs.release();
 
