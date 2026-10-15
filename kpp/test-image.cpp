@@ -19,9 +19,9 @@ int main() {
     // variabel morphologi
     cv::Mat morphology = thresholdedImage.clone();
     // function morph erode and dilate
-    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),3);
-    cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
-    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),3);
+    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),5);
+    cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
+    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
     // variabel vector contour
     std::vector<std::vector<cv::Point>> contours;
