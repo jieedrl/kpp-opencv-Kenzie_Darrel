@@ -37,6 +37,19 @@ int main() {
         }
     }
 
+    cv::Moments m = cv::moments(thresholdedImage, true);
+    cv::Point p(m.m10 / m.m00, m.m01 / m.m00);
+    std::string point_text = cv::format("[%d %d]", p.x, p.y);
+
+    cv::putText(
+        result,
+        point_text,
+        cv::Point(p.x, p.y),
+        cv::FONT_HERSHEY_SIMPLEX, 0.4,
+        cv::Scalar(0,255,0),
+        2
+    );
+
     // perbedaan
     cv::imshow("hls", hlsImage);
     cv::imshow("thresholded", thresholdedImage);
