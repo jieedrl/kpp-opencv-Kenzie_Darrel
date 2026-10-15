@@ -5,16 +5,17 @@ int main() {
     cv::Mat image = cv::imread("../image_n_video/photos/card.jpeg");
     cv::resize(image, image, cv::Size(640,480));
 
-    // variabel hlsimage
-    cv::Mat hlsImage;
+    // variabel hsvImage
+    cv::Mat hsvImage;
     // function convert color
-    cv::cvtColor(image, hlsImage, cv::COLOR_BGR2HLS);
+    cv::cvtColor(image, hsvImage, cv::COLOR_BGR2HSV);
     
     // variabel thresholdedImage
-    cv::Mat thresholdedImage;
+    cv::Mat thresholdedImage,red1,red2;
     // function thresholding
-    cv::inRange(hlsImage, cv::Scalar(4,49,68), cv::Scalar(255,211,255), thresholdedImage);
-
+    cv::inRange(hsvImage, cv::Scalar(0,130,150), cv::Scalar(4,255,255), red1);
+        cv::inRange(hsvImage, cv::Scalar(175,130,150), cv::Scalar(179,255,255), red2);
+        cv::bitwise_or(red1,red2,thresholdedImage); 
     // variabel morphologi
     cv::Mat morphology = thresholdedImage.clone();
     // function morph erode and dilate
@@ -37,7 +38,7 @@ int main() {
     }
 
     // perbedaan
-    cv::imshow("hls", hlsImage);
+    cv::imshow("hls", hsvImage);
     cv::imshow("thresholded", thresholdedImage);
     cv::imshow("morph", morphology);
     cv::imshow("Bounding Box Result", result);
