@@ -17,15 +17,17 @@ int main() {
         cv::cvtColor(resized, hlsframe, cv::COLOR_BGR2HLS);
         
         // variabel thresholdedframe
-        cv::Mat thresholdedframe;
+        cv::Mat thresholdedframe,red1,red2;
         // function thresholding
-        cv::inRange(hlsframe, cv::Scalar(0,166,179), cv::Scalar(4,211,255), thresholdedframe);
+        cv::inRange(hlsframe, cv::Scalar(0,90,120), cv::Scalar(10,200,255), red1);
+        cv::inRange(hlsframe, cv::Scalar(175,90,120), cv::Scalar(179,200,255), red2); 
+        cv::bitwise_or(red1,red2,thresholdedframe);
 
         // variabel morphologi
         cv::Mat morphology = thresholdedframe.clone();
         // function morph erode and dilate
-        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
-        cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),1);
+        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),5);
+        cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
         cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
         // variabel vector contour
@@ -36,7 +38,7 @@ int main() {
         cv::Mat result = resized.clone();
 
         for (size_t i = 0; i < contours.size(); i++) {
-            if (cv::contourArea(contours[i]) > 3000) {
+            if (cv::contourArea(contours[i]) > 2000) {
                 cv::Rect boundingBox = cv::boundingRect(contours[i]);
                 cv::rectangle(result,boundingBox,cv::Scalar(0,255,0),2);
             }
@@ -45,7 +47,7 @@ int main() {
         if (result.empty()) break;   
 
         // show
-        cv::imshow("Card", thresholdedframe);
+        cv::imshow("Card", result);
         if (cv::waitKey(25) == 'q') break;
     }
 }
