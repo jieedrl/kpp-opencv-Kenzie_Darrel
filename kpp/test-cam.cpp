@@ -37,7 +37,7 @@ int main() {
         // variabel morphologi
         cv::Mat morphology = thresholdedframe.clone();
         // function morph erode and dilate
-        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),5);
+        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),10);
         cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
         cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
