@@ -35,7 +35,7 @@ int main() {
         cv::cvtColor(resized, hlsframe, cv::COLOR_BGR2HLS);
         
         cv::Mat red, red1, red2, blue, green;
-        // untuk red card
+        // untuk red 
         cv::inRange(hlsframe, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
         cv::inRange(hlsframe, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
         red = red1 | red2;
@@ -43,29 +43,27 @@ int main() {
         // untuk green paper
         cv::inRange(hlsframe, cv::Scalar(72,130,80), cv::Scalar(90,195,180), green);
 
-        // untuk blue erase
+        // untuk blue eraser
         cv::inRange(hlsframe, cv::Scalar(100,80,100),cv::Scalar(118,190,255), blue);
 
         std::vector<cv::Mat> color = {red, green, blue};
         std::vector<std::string> label = {"red card", "green paper", "blue eraser"};
-        std::vector<double> w_reals = {9.5, 6.0, 17.0};
+        std::vector<double> w_reals = {21.0, 20.8, 11.5};
         
         cv::Mat result = resized.clone();
         for (int c = 0; c < 3; c++) {
             cv::Mat morphology = color[c].clone();
-            // function morph erode and dilate
             cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
             cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
             std::vector<std::vector<cv::Point>> contours;
-            // function find contour
             cv::findContours(morphology,contours,cv::RETR_EXTERNAL,cv::CHAIN_APPROX_SIMPLE);
 
             for (size_t i = 0; i < contours.size(); i++) {
                 if (cv::contourArea(contours[i]) > 2000) {
                     cv::Rect boundingBox = cv::boundingRect(contours[i]);
                     cv::Point tl = boundingBox.tl();
-                    cv::rectangle(result,boundingBox,cv::Scalar(0,0,255),2);
+                    cv::rectangle(result,boundingBox,cv::Scalar(255,0,0),2);
                     double w_pixel = boundingBox.width;
 
                     cv::Moments m = cv::moments(contours[i], true);
@@ -76,7 +74,8 @@ int main() {
                     double y = (p.y-cy)*z/fy;
 
                     std::string label_text = label[c];
-                    std::string koordinat = cv::format("[%lf %lf %lf]", x, y, z);
+                    std::string koordinat = cv::format("(%.2lf, %.2lf, %.2lf)", x, y, z);
+                    std::string jarak_z = cv::format("Jarak Z = %.2lf cm", z);
 
                     std::string output = label_text + " " + koordinat;
 
@@ -85,7 +84,16 @@ int main() {
                         output, 
                         tl,
                         cv::FONT_HERSHEY_SIMPLEX,0.7,
-                        cv::Scalar(0,255,0),
+                        cv::Scalar(0,255,255),
+                        2
+                    );
+
+                    cv::putText(
+                        result,
+                        jarak_z,
+                        cv::Point(tl.x, tl.y+28),
+                        cv::FONT_HERSHEY_SIMPLEX, 0.7,
+                        cv::Scalar(0,255,255),
                         2
                     );
                 }
@@ -97,8 +105,8 @@ int main() {
         cv::putText(
             result, 
             fps_text,
-            cv::Point(800, 20),
-            cv::FONT_HERSHEY_SIMPLEX, 0.7,
+            cv::Point(1180, 20),
+            cv::FONT_HERSHEY_SIMPLEX, 0.75,
             cv::Scalar(0,255,0),
             2
         );
