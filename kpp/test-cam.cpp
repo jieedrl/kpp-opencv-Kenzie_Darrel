@@ -31,15 +31,15 @@ int main() {
         cv::Mat thresholdedframe, red1, red2;
 
         // untuk red card
-        // cv::inRange(hlsframe, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
-        // cv::inRange(hlsframe, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
+        // cv::inRange(hlsframe, cv::Scalar(0,100,60), cv::Scalar(8,200,255), red1);
+        // cv::inRange(hlsframe, cv::Scalar(165,100,60), cv::Scalar(179,200,255), red2);
         // thresholdedframe = red1 | red2;
 
         // untuk green paper
-        // cv::inRange(hlsframe, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedframe);
+        cv::inRange(hlsframe, cv::Scalar(72,130,80), cv::Scalar(90,195,180), thresholdedframe);
 
         // untuk blue erase
-        cv::inRange(hlsframe, cv::Scalar(100,80,100),cv::Scalar(118,190,255), thresholdedframe);
+        // cv::inRange(hlsframe, cv::Scalar(100,80,100),cv::Scalar(118,190,255), thresholdedframe);
 
         // variabel morphologi
         cv::Mat morphology = thresholdedframe.clone();
