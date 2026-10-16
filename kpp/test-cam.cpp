@@ -3,7 +3,7 @@
 
 int main() {
     // variabel
-    cv::VideoCapture cap("http://10.89.12.23:8080/video");
+    cv::VideoCapture cap("http://10.95.94.134:8080/video");
     cv::Mat frame;
 
     int64 t_prev = cv::getTickCount();
@@ -31,12 +31,15 @@ int main() {
         cv::Mat thresholdedframe, red1, red2;
 
         // untuk red card
-        cv::inRange(hlsframe, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
-        cv::inRange(hlsframe, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
-        thresholdedframe = red1 | red2;
+        // cv::inRange(hlsframe, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
+        // cv::inRange(hlsframe, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
+        // thresholdedframe = red1 | red2;
 
         // untuk green paper
-        cv::inRange(hlsframe, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedframe);
+        // cv::inRange(hlsframe, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedframe);
+
+        // untuk blue erase
+        cv::inRange(hlsframe, cv::Scalar(100,80,100),cv::Scalar(118,190,255), thresholdedframe);
 
         // variabel morphologi
         cv::Mat morphology = thresholdedframe.clone();

@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-    cv::Mat image = cv::imread("../image_n_video/photos/green-paper.jpeg");
+    cv::Mat image = cv::imread("../image_n_video/photos/biru.jpeg");
     cv::resize(image, image, cv::Size(640,480));
 
     // variabel hlsImage
@@ -20,7 +20,10 @@ int main() {
     // variabel morphologi
 
     // kertas hijau
-    cv::inRange(hlsImage, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedImage);
+    // cv::inRange(hlsImage, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedImage);
+
+    // blue eraser
+    cv::inRange(hlsImage, cv::Scalar(100,80,100),cv::Scalar(118,190,255), thresholdedImage);
 
     cv::Mat morphology = thresholdedImage.clone();
     // function morph erode and dilate
@@ -29,7 +32,7 @@ int main() {
     // cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
     // cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
-    // untuk green paper
+    // untuk green paper dan blue eraser
     cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
     cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
