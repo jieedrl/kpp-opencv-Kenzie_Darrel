@@ -3,7 +3,7 @@
 
 int main() {
     // variabel
-    cv::VideoCapture cap("http://10.92.213.219:8080/video");
+    cv::VideoCapture cap("http://10.83.226.244:8080/video");
     cv::Mat frame;
 
     int64 t_prev = cv::getTickCount();
@@ -28,18 +28,18 @@ int main() {
         cv::cvtColor(resized, hlsframe, cv::COLOR_BGR2HLS);
         
         // variabel thresholdedframe
-        cv::Mat thresholdedframe,red1,red2;
+        cv::Mat thresholdedframe, red1, red2;
         // function thresholding
-        cv::inRange(hlsframe, cv::Scalar(0,90,120), cv::Scalar(10,200,255), red1);
-        cv::inRange(hlsframe, cv::Scalar(175,90,120), cv::Scalar(179,200,255), red2); 
-        cv::bitwise_or(red1,red2,thresholdedframe);
+        cv::inRange(hlsframe, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
+        cv::inRange(hlsframe, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
+        thresholdedframe = red1 | red2;
 
         // variabel morphologi
         cv::Mat morphology = thresholdedframe.clone();
         // function morph erode and dilate
-        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),10);
-        cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
-        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
+        cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
+        cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
+        // cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
 
         // variabel vector contour
         std::vector<std::vector<cv::Point>> contours;
