@@ -3,7 +3,7 @@
 
 int main() {
     // variabel
-    cv::VideoCapture cap("http://10.83.226.244:8080/video");
+    cv::VideoCapture cap("http://10.89.12.23:8080/video");
     cv::Mat frame;
 
     int64 t_prev = cv::getTickCount();
@@ -29,10 +29,14 @@ int main() {
         
         // variabel thresholdedframe
         cv::Mat thresholdedframe, red1, red2;
-        // function thresholding
+
+        // untuk red card
         cv::inRange(hlsframe, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
         cv::inRange(hlsframe, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
         thresholdedframe = red1 | red2;
+
+        // untuk green paper
+        cv::inRange(hlsframe, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedframe);
 
         // variabel morphologi
         cv::Mat morphology = thresholdedframe.clone();

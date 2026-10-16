@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-    cv::Mat image = cv::imread("../image_n_video/photos/3-object.jpeg");
+    cv::Mat image = cv::imread("../image_n_video/photos/green-paper.jpeg");
     cv::resize(image, image, cv::Size(640,480));
 
     // variabel hlsImage
@@ -14,16 +14,24 @@ int main() {
     cv::Mat thresholdedImage,red1,red2;
     
     // kartu merah
-    cv::inRange(hlsImage, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
-    cv::inRange(hlsImage, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
-    cv::bitwise_or(red1,red2,thresholdedImage); 
+    // cv::inRange(hlsImage, cv::Scalar(0,90,50), cv::Scalar(8,190,255), red1);
+    // cv::inRange(hlsImage, cv::Scalar(165,90,50), cv::Scalar(179,190,255), red2);
+    // cv::bitwise_or(red1,red2,thresholdedImage); 
     // variabel morphologi
+
+    // kertas hijau
+    cv::inRange(hlsImage, cv::Scalar(45,80,40), cv::Scalar(75,190,200), thresholdedImage);
 
     cv::Mat morphology = thresholdedImage.clone();
     // function morph erode and dilate
-    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
+
+    // untuk red card
+    // cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),4);
+    // cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
+
+    // untuk green paper
+    cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
     cv::erode(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2);
-    // cv::dilate(morphology,morphology,cv::Mat(), cv::Point(-1,-1),2)
 
     // variabel vector contour
     std::vector<std::vector<cv::Point>> contours;
