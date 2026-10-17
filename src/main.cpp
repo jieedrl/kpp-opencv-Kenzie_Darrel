@@ -47,7 +47,7 @@ int main() {
         cv::inRange(hlsframe, cv::Scalar(100,80,100),cv::Scalar(118,190,255), blue);
 
         std::vector<cv::Mat> color = {red, green, blue};
-        std::vector<std::string> label = {"red card", "green paper", "blue eraser"};
+        std::vector<std::string> label = {"red paper", "green paper", "blue eraser"};
         std::vector<double> w_reals = {21.0, 20.8, 11.5};
         
         cv::Mat result = resized.clone();

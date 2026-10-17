@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-    cv::VideoCapture cap("http://10.92.213.219:8080/video");
+    cv::VideoCapture cap("http://10.95.94.134:8080/video");
 
     cap.set(cv::CAP_PROP_FRAME_WIDTH, 1920);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, 1080);
@@ -32,7 +32,6 @@ int main() {
     }
     
     cv::Size img_size;
-
     int64 t_prev = cv::getTickCount();
     double fps = 0.0;
 
@@ -118,7 +117,6 @@ int main() {
         cv::imshow("Camera Calibration", frame);
 
         char key = cv::waitKey(10);
-
         if (key == 'c') {
             if (found) {
                 obj_points.push_back(objp);
@@ -127,7 +125,6 @@ int main() {
                 std::cout << "Sampel berhasil diambil: " << obj_points.size() << '\n';
             } else std::cout << "Chessboard belum terdeteksi!\n";
         }
-
         if (key == 'q') break;
     }
 
@@ -154,10 +151,6 @@ int main() {
         rvecs,
         tvecs
     );
-
-    std::cout << "\nCamera matrix K:\n" << K << '\n';
-    std::cout << "\nDistortion D:\n" << D.t() << '\n';
-    std::cout << "\nReprojection error: " << ret << '\n';
 
     cv::FileStorage fs("../yaml/calibration.yml",cv::FileStorage::WRITE);
 
