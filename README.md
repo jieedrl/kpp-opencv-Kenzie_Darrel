@@ -10,6 +10,7 @@ Lebar Asli Objek:
 1. 21.0 --> red paper
 2. 20.8 --> green paper
 3. 11.5 --> blue eraser
+
 Kamera yang saya gunakan adalah kamera HP yang dihubungkan ke laptop dengan menggunakan IP webcam
 
 Penjelasan calib
