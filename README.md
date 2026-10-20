@@ -21,8 +21,8 @@ Penjelasan main
 
 main akan mengambil fx, fy, cx, cy dari hasil kalibrasi dengan fungsi cv::FileStorage::READ. Video yang ditangkap oleh kamera akan dikonversi menjadi frame dalam loop dan frame akan dikonversi menjadi warna dalam hls menggunakan cv::cvtColor. Dari hasil konversi warna tersebut dilakukan thresholding untuk ketiga objek yaitu merah, hijau, dan biru yang dimasukkan ke dalam vector untuk membedakan setiap objek. Lalu morphology dilakukan untuk setiap threshold dalam vector dan dipanggil fungsi cv::findContours untuk mencari contour yang terbentuk setelah morpholgy serta dibentuk bounding box berdasarkan countourArea yang memenuhi kondisi. Dari setiap bounding box yang dihasilkan dideklarasikan lebar bounding box sebagai w pixel dan ditentukan centroid/titik pusat objek dengan menggunakan cv::moment. Dilakukan perhitungan untuk koordinat (x,y,z) sesuai rumus
 
-z = fx * w_real / w_pixel
-y = (y_pixel - cy) / fy
-x = (x_pixel - cx) / fx
+1. z = fx * w_real / w_pixel
+2. y = (y_pixel - cy) / fy
+3. x = (x_pixel - cx) / fx
 
 hasil perhitungan akan ditampilkan dengan menggunakan fungsi cv::putText
